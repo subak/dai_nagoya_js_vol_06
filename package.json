@@ -1,0 +1,20 @@
+{
+  "name":         "dai_nagoya_js_vol_06",
+  "version":      "0.0.1",
+  "dependencies": {
+    "st":         "0.1.x",
+    "requirejs":  "2.1.x",
+    "amdefine":   "0.0.x",
+    "JQDeferred": "1.9.x",
+    "mongoose":   "3.x.x",
+    "now":        "0.8.x",
+    "moment":     "2.x.x",
+    "mubsub":     "1.0.x",
+    "node-uuid":  "1.4.x",
+    "redis":      "0.8.x"
+  },
+  "engines":      {
+    "node": "0.10.x",
+    "npm":  "1.2.x"
+  }
+}
