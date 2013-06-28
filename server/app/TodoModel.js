@@ -1,4 +1,4 @@
-define(["node-uuid", "Deferred", "when", "di/redisClient"], function (uuid, Deferred, when, db) {
+define(["node-uuid", "Deferred", "when", "di/redisDbClient"], function (uuid, Deferred, when, db) {
   "use strict";
 
   var collectionKey = "TodoModel";

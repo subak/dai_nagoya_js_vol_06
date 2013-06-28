@@ -32,7 +32,7 @@ requirejs([
   }, TodoModel);
   everyone.now.TodoModel = Model;
 
-  everyone.now.todoModelEmitter = {
+  everyone.now.crudEmitter = {
     on: crudEmitter.on.bind(crudEmitter)
   };
 

@@ -9,14 +9,6 @@ define(["knockout"], function (ko) {
     this.id = id;
     this.orgTitle = title;
     this.orgCompleted = completed;
-
-    this.completed.subscribe = function (newValue) {
-      debugger
-    };
-  };
-
-  self.prototype.updatedCompleted = function () {
-    debugger
   };
 
   return self;

@@ -1,5 +1,5 @@
 define([
-  "knockout", "lib/TodoModel", "app/TodoViewModel", "di/todoModelEmitter"
+  "knockout", "lib/TodoModel", "app/TodoViewModel", "di/crudEmitter"
 ], function (ko, TodoModel, TodoViewModel, emitter) {
   "use strict";
 
