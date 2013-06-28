@@ -1,5 +1,5 @@
 /*global ko Router */
-require(["lib/TodoModel"], function (TodoModel) {
+require(["knockout", "lib/TodoViewModel", "lib/TodoModel", "lib/ViewModelModule"], function (ko, Todo, TodoModel, ViewModelModule) {
 	'use strict';
 
 	var ENTER_KEY = 13;
@@ -46,11 +46,14 @@ require(["lib/TodoModel"], function (TodoModel) {
 	};
 
 	// represent a single todo item
-	var Todo = function (title, completed) {
-		this.title = ko.observable(title);
-		this.completed = ko.observable(completed);
-		this.editing = ko.observable(false);
-	};
+//	var Todo = function (title, completed, id) {
+//		this.title = ko.observable(title);
+//		this.completed = ko.observable(completed);
+//		this.editing = ko.observable(false);
+//    this.id = id;
+//    this.orgTitle = title;
+//    this.orgCompleted = completed;
+//	};
 
 	// our main view model
 	var ViewModel = function (todos) {
@@ -84,7 +87,7 @@ require(["lib/TodoModel"], function (TodoModel) {
     self.replace = function (todos) {
       self.todos.removeAll();
       ko.utils.arrayForEach(todos, function (todo) {
-        self.todos.push(new Todo(todo.title, todo.completed));
+        self.todos.push(new Todo(todo.title, todo.completed, todo.id));
       });
     };
 
@@ -162,6 +165,8 @@ require(["lib/TodoModel"], function (TodoModel) {
 		}).extend({
 			throttle: 500
 		}); // save at most twice per second
+
+    ViewModelModule.call(self);
 	};
 
 	// bind a new instance of our view model to the page

@@ -1,4 +1,4 @@
-define(["node-uuid", "Deferred", "when", "di/redisClient", "di/todoModelEmitter"], function (uuid, Deferred, when, db, emitter) {
+define(["node-uuid", "Deferred", "when", "di/redisClient"], function (uuid, Deferred, when, db) {
   "use strict";
 
   var collectionKey = "TodoModel";
@@ -102,7 +102,7 @@ define(["node-uuid", "Deferred", "when", "di/redisClient", "di/todoModelEmitter"
     ])
       .done(function () {
         callback(null, id);
-        emitter.emit("created", id);
+        db.publish("created", id);
       })
       .fail(function (err) {
         callback(err);
@@ -122,7 +122,7 @@ define(["node-uuid", "Deferred", "when", "di/redisClient", "di/todoModelEmitter"
         callback(err);
       } else {
         callback(null, id);
-        emitter.emit("updated", id);
+        db.publish("updated", id);
       }
     });
   };
@@ -133,13 +133,13 @@ define(["node-uuid", "Deferred", "when", "di/redisClient", "di/todoModelEmitter"
    */
   self.remove = function (id, callback) {
     doSync([
-      db.hdel(id, "title"),
-      db.hdel(id, "completed"),
-      db.lrem(collectionKey, 1, id)
+      db.hdel.bind(db, id, "title"),
+      db.hdel.bind(db, id, "completed"),
+      db.lrem.bind(db, collectionKey, 1, id)
     ])
       .done(function () {
         callback(null, id);
-        emitter.emit("removed", id);
+        db.publish("removed", id);
       })
       .fail(function (err) {
         callback(err);

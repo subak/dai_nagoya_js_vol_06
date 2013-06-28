@@ -8,7 +8,7 @@ requirejs.config({
   }
 });
 
-requirejs(["http", "st", "now", "app/TodoModel"], function (http, st, now, TodoModel) {
+requirejs(["http", "st", "now", "EventEmitter", "app/TodoModel", "di/todoModelEmitter"], function (http, st, now, EventEmitter, TodoModel, emitter) {
   "use strict";
 
   var  mount = st({
@@ -29,6 +29,10 @@ requirejs(["http", "st", "now", "app/TodoModel"], function (http, st, now, TodoM
     Model[funcName] = this[funcName].bind(this);
   }, TodoModel);
   everyone.now.TodoModel = Model;
+
+  everyone.now.todoModelEmitter = {
+    on: emitter.on.bind(emitter)
+  };
 
   httpServer.listen(process.env.PORT || 5000);
 });
