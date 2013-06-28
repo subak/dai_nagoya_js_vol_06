@@ -16,12 +16,7 @@ define(["node-uuid", "Deferred", "when", "di/redisClient"], function (uuid, Defe
   }
 
   /**
-   * {
-   *   "{id}": {
-   *     "title": "{title}",
-   *     "completed": []
-   *   }
-   * }
+   *
    * @param callback
    */
   self.find = function (callback) {
@@ -54,6 +49,23 @@ define(["node-uuid", "Deferred", "when", "di/redisClient"], function (uuid, Defe
         callback(null, collection.map(function (id) {
           return res[id];
         }));
+      })
+      .fail(function (err) {
+        callback(err);
+      });
+  };
+
+  self.findOne = function (id, callback) {
+    doSync([
+      db.hget.bind(db, id, "title"),
+      db.hget.bind(db, id, "completed")
+    ])
+      .done(function (title, completed) {
+        return {
+          id:        id,
+          title:     title,
+          completed: completed
+        }
       })
       .fail(function (err) {
         callback(err);
