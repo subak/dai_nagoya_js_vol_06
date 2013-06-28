@@ -1,5 +1,5 @@
 /*global ko Router */
-(function () {
+require(["lib/TodoModel"], function (TodoModel) {
 	'use strict';
 
 	var ENTER_KEY = 13;
@@ -81,6 +81,13 @@
 			}
 		});
 
+    self.replace = function (todos) {
+      self.todos.removeAll();
+      ko.utils.arrayForEach(todos, function (todo) {
+        self.todos.push(new Todo(todo.title, todo.completed));
+      });
+    };
+
 		// add a new todo, when enter key is pressed
 		self.add = function () {
 			var current = self.current().trim();
@@ -157,14 +164,15 @@
 		}); // save at most twice per second
 	};
 
-	// check local storage for todos
-	var todos = ko.utils.parseJson(localStorage.getItem('todos-knockoutjs'));
-
 	// bind a new instance of our view model to the page
-	var viewModel = new ViewModel(todos || []);
+	var viewModel = new ViewModel([]);
 	ko.applyBindings(viewModel);
 
 	// set up filter routing
 	/*jshint newcap:false */
 	Router({'/:filter': viewModel.showMode}).init();
-})();
+
+  TodoModel.find(function (err, collection) {
+    viewModel.replace(collection);
+  });
+});
