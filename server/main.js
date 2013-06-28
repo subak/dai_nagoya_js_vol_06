@@ -2,12 +2,13 @@ var requirejs = require("requirejs");
 requirejs.config({
   baseUrl: __dirname,
   paths: {
-    "Deferred": "lib/JQDeferred/Deferred",
-    "when":     "lib/JQDeferred/when"
+    "Deferred":     "lib/JQDeferred/Deferred",
+    "when":         "lib/JQDeferred/when",
+    "EventEmitter": "lib/EventEmitter"
   }
 });
 
-requirejs(["http", "st", "now", "lib/TodoModel"], function (http, st, now, TodoModel) {
+requirejs(["http", "st", "now", "app/TodoModel"], function (http, st, now, TodoModel) {
   "use strict";
 
   var  mount = st({
@@ -31,24 +32,3 @@ requirejs(["http", "st", "now", "lib/TodoModel"], function (http, st, now, TodoM
 
   httpServer.listen(process.env.PORT || 5000);
 });
-
-
-//"use strict";
-//
-//var http = require("http"),
-//  st = require("st"),
-//  nowjs = require("now"),
-//  mount = st({
-//    path:  "client/knockoutjs",
-//    url:   "/",
-//    index: "index.html",
-//    cache: false
-//  }),
-//  httpServer = http.createServer(mount),
-//  everyone = nowjs.initialize(httpServer, {
-//    socketio: {
-//      transports: ['xhr-polling', 'jsonp-polling']
-//    }
-//  });
-//
-//httpServer.listen(process.env.PORT || 5000);
