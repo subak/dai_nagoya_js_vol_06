@@ -1,5 +1,5 @@
 /*global ko Router */
-require(["knockout", "lib/ViewModelViewModel", "lib/TodoModel", "lib/ViewModelModule"], function (ko, ViewModel, TodoModel, ViewModelModule) {
+require(["knockout", "app/ViewModelViewModel", "lib/TodoModel"], function (ko, ViewModel, TodoModel) {
 	'use strict';
 
 	var ENTER_KEY = 13;

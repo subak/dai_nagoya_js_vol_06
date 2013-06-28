@@ -1,5 +1,9 @@
-define(["knockout", "lib/TodoViewModel", "lib/TodoModel", "di/todoModelEmitter"], function (ko, TodoViewModel, TodoModel, emitter) {
-  var self = function ViewModelModule() {
+define([
+  "knockout", "lib/TodoModel", "app/TodoViewModel", "di/todoModelEmitter"
+], function (ko, TodoModel, TodoViewModel, emitter) {
+  "use strict";
+
+  var self = function ViewModelViewModelModule() {
     var self = this;
     this.waiting = ko.observable(false);
 
@@ -43,6 +47,9 @@ define(["knockout", "lib/TodoViewModel", "lib/TodoModel", "di/todoModelEmitter"]
         return item.id === id;
       });
     ko.utils.arrayForEach(todos, function (item) {
+      if (item.editing()) {
+        alert("編集中に他のユーザーがこのアイテムを削除したため編集内容は破棄されます。");
+      }
       self.todos.remove(item);
     });
     this.waiting(false);
@@ -109,11 +116,15 @@ define(["knockout", "lib/TodoViewModel", "lib/TodoModel", "di/todoModelEmitter"]
         throw new Error;
       } else {
         ko.utils.arrayForEach(todos, function (item) {
-          item.title(model.title);
-          item.completed(model.completed);
+          if (!self.waiting() && item.editing() && confirm("編集中に他のユーザーがこのアイテムを更新しました。無視して編集を続けますか？")) {
+          } else {
+            item.title(model.title);
+            item.completed(model.completed);
+            item.editing(false);
+          }
+
           item.orgTitle = model.title;
           item.orgCompleted = model.completed;
-          item.editing(false);
         });
         self.waiting(false);
       }

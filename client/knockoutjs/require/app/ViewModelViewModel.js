@@ -1,4 +1,4 @@
-define(["knockout", "lib/TodoViewModel", "lib/ViewModelModule"], function (ko, Todo, ViewModelModule) {
+define(["knockout", "app/TodoViewModel", "app/ViewModelViewModelModule"], function (ko, Todo, Module) {
   "use strict";
 
   // our main view model
@@ -112,7 +112,7 @@ define(["knockout", "lib/TodoViewModel", "lib/ViewModelModule"], function (ko, T
         throttle: 500
       }); // save at most twice per second
 
-    ViewModelModule.call(self);
+    Module.call(self);
   };
 
   return self;
